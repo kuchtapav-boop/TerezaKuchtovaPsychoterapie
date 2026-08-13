@@ -4,11 +4,65 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tereza Kuchtová | Psychoterapie Ostrava</title>
-<meta name="description" content="Individuální psychoterapie pro dospělé v Ostravě i online. Prostor pro klid, jasnost a cestu dál.">
+<meta name="description" content="Individuální psychoterapie pro rodiče v nesnázích. Klidný prostor v Ostravě Hrabůvce, kde společně najdeme cestu dál.">
+
+<!-- Kanonická adresa – pomáhá vyhledávačům spojit všechny varianty URL
+     (s www i bez, http i https) do jedné preferované verze. -->
+<link rel="canonical" href="https://terezakuchtova.cz/">
+
+<!-- Open Graph – jak bude odkaz na web vypadat při sdílení na Facebooku,
+     LinkedInu, WhatsAppu apod. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tereza Kuchtová | Psychoterapie">
+<meta property="og:title" content="Tereza Kuchtová | Psychoterapie Ostrava">
+<meta property="og:description" content="Individuální psychoterapie pro rodiče v nesnázích. Klidný prostor v Ostravě Hrabůvce, kde společně najdeme cestu dál.">
+<meta property="og:url" content="https://terezakuchtova.cz/">
+<meta property="og:image" content="https://terezakuchtova.cz/images/hero.png">
+<meta property="og:locale" content="cs_CZ">
+
+<!-- Twitter Card – náhled při sdílení na X/Twitteru (bez tohoto by se
+     použil jen prostý odkaz bez obrázku). -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tereza Kuchtová | Psychoterapie Ostrava">
+<meta name="twitter:description" content="Individuální psychoterapie pro rodiče v nesnázích. Klidný prostor v Ostravě Hrabůvce, kde společně najdeme cestu dál.">
+<meta name="twitter:image" content="https://terezakuchtova.cz/images/hero.png">
 
 <!-- Favicon: jednoduchý monogram "TK" jako vložené SVG (bez nutnosti externího souboru),
      barvy odpovídají paletě webu – hnědé pozadí, krémové písmo. -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237B5141'/%3E%3Ctext x='32' y='43' font-family='Georgia, serif' font-size='26' font-weight='700' fill='%23F7F2E6' text-anchor='middle'%3ETK%3C/text%3E%3C/svg%3E">
+
+<!-- Strukturovaná data (Schema.org / JSON-LD) – pomáhají Googlu pochopit,
+     že jde o místní odbornou praxi konkrétní osoby. Zvyšuje šanci na
+     bohatší zobrazení ve výsledcích vyhledávání (např. adresa, obor). 
+     Telefon a přesnou ulici doplň, až budou k dispozici. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Tereza Kuchtová | Psychoterapie",
+  "image": "https://terezakuchtova.cz/images/hero.png",
+  "url": "https://terezakuchtova.cz/",
+  "description": "Individuální psychoterapie pro rodiče v nesnázích v Ostravě Hrabůvce.",
+  "email": "kuchtova.terez@gmail.com",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Ostrava-Hrabůvka",
+    "addressRegion": "Moravskoslezský kraj",
+    "addressCountry": "CZ"
+  },
+  "areaServed": "Ostrava",
+  "founder": {
+    "@type": "Person",
+    "name": "Mgr. Tereza Kuchtová",
+    "jobTitle": "Psychoterapeutka ve výcviku",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Ostravská univerzita"
+    }
+  }
+}
+</script>
 
 <style>
   /* ===========================================================
@@ -245,6 +299,15 @@
     .logo{
       font-size:clamp(.82rem, 4.2vw, 1.05rem);
       white-space:nowrap; /* jméno se na mobilu nezalamuje na dva řádky */
+      /* Na extrémně úzkých šířkách (pod ~350px) se jméno i s tlačítkem
+         a hamburgerem už nevejde vedle sebe. Bez min-width:0 by flexbox
+         logu nedovolil zmenšit se pod šířku textu, a tlačítko s hamburgerem
+         by vytlačil mimo obrazovku – to roztahovalo celou stránku do strany
+         a rozhodilo vystředění obsahu níže. Místo toho se text teď v
+         krajním případě ořízne výpustkou (…). */
+      min-width:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
     .logo span{ font-size:.6rem; letter-spacing:.1em; }
     .nav-right{ gap:10px; }
@@ -351,9 +414,24 @@
   }
 
   @media (max-width:860px){
-    .hero .container{ grid-template-columns:1fr; }
-    .hero-photo{ order:-1; }
+    /* Gap 56px byl určený jako mezera mezi sloupcem textu a fotkou na desktopu.
+       Na mobilu se ale .hero-text "rozpouští" (display:contents), takže se
+       stejný gap uplatňoval mezi úplně KAŽDÝM prvkem zvlášť (badge, nadpis,
+       text, tlačítka) – proto vznikaly ty velké mezery. Gap proto na mobilu
+       vypínáme a odstup mezi fotkou a textem řešíme samostatnou spodní
+       mezerou u fotky; mezi zbylými prvky stačí jejich vlastní margin. */
+    .hero{ padding-top:36px; }
+    .hero .container{ grid-template-columns:1fr; gap:0; }
+    .hero-photo{ order:-1; margin-bottom:32px; }
     .hero-photo-frame{ max-width:280px; }
+    /* Stavová hláška o volné kapacitě má být na mobilu úplně nahoře, nad fotkou.
+       .hero-text se "rozpustí" (display:contents), takže se jeho děti stanou
+       přímými položkami gridu a lze jim nezávisle nastavit pořadí.
+       Vlastní spodní okraj hlášky je záměrně větší než na desktopu – fotka
+       má kolem sebe ještě prstenec (--blob), který přesahuje o 22px, takže
+       menší mezera by hlášku s fotkou opticky srážela. */
+    .hero-text{ display:contents; }
+    .status-badge{ order:-2; margin-bottom:56px; }
   }
 
   /* Na mobilních telefonech byl nadpis "Mgr. Tereza Kuchtová" i přes clamp()
@@ -374,6 +452,8 @@
   }
   /* menší mezera mezi textem "O mně" a nadpisem Kvalifikace */
   .about .section-heading{ margin-bottom:0; max-width:none; }
+  /* zarovnání odstavců do bloku – na mobilu vypadá nezarovnaný text (ragged edge) rušivě */
+  .about .section-heading p{ text-align:justify; }
   /* prolink v textu O mně (např. na Sdílenou terapeutovnu) */
   .about .section-heading p a{
     color:var(--rose-dark);
@@ -435,12 +515,26 @@
   .komu-layout{
     display:grid;
     grid-template-columns:1fr 300px;
-    gap:48px;
+    grid-template-areas:
+      "eyebrow card"
+      "text    card";
+    gap:0 48px;
     align-items:start;
   }
-  .komu-layout .section-heading{ margin-bottom:0; }
+  .komu-layout .section-heading{ grid-area:eyebrow; margin-bottom:0; }
+  .komu-layout .komu-text{ grid-area:text; }
+  .komu-layout .care-card{ grid-area:card; }
+  /* zarovnání odstavců do bloku – na mobilu vypadá nezarovnaný text (ragged edge) rušivě */
+  .komu-layout .komu-text p{ text-align:justify; }
   @media (max-width:860px){
-    .komu-layout{ grid-template-columns:1fr; }
+    .komu-layout{
+      grid-template-columns:1fr;
+      grid-template-areas:
+        "eyebrow"
+        "card"
+        "text";
+      gap:24px;
+    }
   }
   .care-card{
     background:var(--cream);
@@ -665,8 +759,18 @@
   .form-consent input{ margin-top:4px; }
   .form-consent label{ font-weight:400; font-size:.85rem; color:var(--text-soft); }
 
-  /* honeypot pole – skryté před lidmi, ale viditelné pro spamboty, kteří ho vyplní */
-  .hp-field{ position:absolute; left:-9999px; top:-9999px; }
+  /* honeypot pole – skryté před lidmi, ale viditelné pro spamboty, kteří ho vyplní.
+     Pozor: dřívější řešení s "left:-9999px" bez pozicovaného rodiče rozšiřovalo
+     scrollovatelnou šířku celé stránky mimo obrazovku, což na mobilu posouvalo
+     veškerý obsah (formulář i kontaktní údaje) doprava. Tato technika (1x1px
+     s ořezem) pole schová stejně spolehlivě, ale šířku stránky neovlivňuje. */
+  .hp-field{
+    position:absolute;
+    width:1px; height:1px;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+  }
 
   /* stavová hláška po odeslání formuláře */
   .form-status{
@@ -731,7 +835,11 @@
   }
 
   @media (max-width:860px){
-    .contact .container{ grid-template-columns:1fr; }
+    /* minmax(0,1fr) místo 1fr: bez toho CSS Grid nedovolí sloupci zmenšit
+       se pod min-content šířku jeho obsahu (např. pevně širokého QR kódu),
+       což na úzkých mobilech roztahovalo celou stránku do strany a rušilo
+       vystředění formuláře i kontaktů. */
+    .contact .container{ grid-template-columns:minmax(0,1fr); }
   }
 
   @media (max-width:400px){
@@ -813,7 +921,7 @@
   <div class="container">
     <div class="hero-text">
       <p class="status-badge"><span class="status-dot" aria-hidden="true"></span>V současnosti mám volnou kapacitu a nabírám nové klienty</p>
-      <h1>Mgr. Tereza Kuchtová<span class="hero-subtitle">Psychoterapeutka ve výcviku</span></h1>
+      <h1>Mgr. Tereza Kuchtová<span class="hero-subtitle">Frekventantka ve výcviku</span></h1>
       <p class="lead">Individuální terapie zaměřená na rodiče v nesnázích.<br>V klidném prostoru v Ostravě Hrabůvce.</p>
       <div class="hero-actions">
         <a href="#kontakt" class="btn btn-primary">Domluvit první setkání</a>
@@ -823,7 +931,7 @@
     <div class="hero-photo">
       <div class="hero-photo-frame">
         <div class="hero-photo-ring" aria-hidden="true"></div>
-        <img src="images/hero.png" alt="Tereza Kuchtová, psychoterapeutka">
+        <img src="images/hero.png" alt="Mgr. Tereza Kuchtová, psychoterapeutka ve výcviku v Ostravě Hrabůvce" fetchpriority="high">
       </div>
     </div>
   </div>
@@ -835,12 +943,12 @@
 <section class="about" id="o-mne">
   <div class="container">
     <div class="section-heading">
-      <span class="eyebrow">O mně</span>
+      <h2 class="eyebrow">O mně</h2>
       <p>Jsem především rodič, sociální pedagog a vychovatel. Celým životem mě provázejí děti. Trávila jsem s nimi více času než s dospělými. Dlouho jsem přemýšlela, zda-li se pustit do dětské psychoterapie a nakonec jsem si řekla, že uchopím cestu z druhé strany a to od rodičů. Aby děti mohly rozkvést, potřebujeme začít u sebe.</p>
       <p>Jsem také zakladatelkou <a href="https://sdilenaterapeutovna.cz/" target="_blank" rel="noopener">Sdílené terapeutovny</a> v Ostravě-Hrabůvce — příjemného prostoru v novostavbě obklopené zelení, kde se snažím dělat psychoterapii dostupnější a propojovat kolegy z pomáhajících profesí.</p>
     </div>
     <div>
-      <span class="eyebrow">Kvalifikace</span>
+      <h3 class="eyebrow">Kvalifikace</h3>
       <ul class="credentials">
         <li><svg class="icon"><use href="#icon-check"/></svg><span><strong>Vzdělání:</strong> magisterský obor sociální pedagog a vychovatel, Pedagogická fakulta Ostravské univerzity</span></li>
         <li><svg class="icon"><use href="#icon-check"/></svg><span><strong>Psychoterapeutický výcvik:</strong> v současnosti jsem frekventantkou výcviku v Integrativní psychoterapii se zaměřením na psychosomatiku, Institut sociálního zdraví na Univerzitě Palackého v Olomouci</span></li>
@@ -870,14 +978,16 @@
   <div class="container">
     <div class="komu-layout">
       <div class="section-heading">
-        <span class="eyebrow">Komu a jak pomáhám</span>
-        <p>Zaměřuji se na rodiče v nesnázích. Věřím, že v sobě nesou to nejdůležitější pro změnu. Když porozumíme lépe sami sobě, vytváříme bezpečnější prostor i pro své děti. Ráda vás na této cestě citlivě provedu.</p>
-        <p>Psychoterapeutický výcvik jsem si vybrala vědomě a to v integrativní psychoterapii se zaměřením na psychosomatiku. Řečeno lidsky a srozumitelně se jedná o práci s více přístupy, které nejlépe odpovídají individuálním potřebám každého z Vás. Společně hledáme cestu, která respektuje Váš příběh, vztahy, životní zkušenosti a možnosti.</p>
-        <p>Svou činnost vykonávám v souladu s etickým kodexem ČAP a pod odbornou supervizí.</p>
+        <h2 class="eyebrow">Komu a jak pomáhám</h2>
       </div>
       <div class="care-card">
         <div class="icon-wrap"><svg class="icon"><use href="#icon-heart"/></svg></div>
         <h3>Zaměřuji se na rodiče v nesnázích.</h3>
+      </div>
+      <div class="komu-text">
+        <p>Zaměřuji se na rodiče v nesnázích. Věřím, že v sobě nesou to nejdůležitější pro změnu. Když porozumíme lépe sami sobě, vytváříme bezpečnější prostor i pro své děti. Ráda vás na této cestě citlivě provedu.</p>
+        <p>Psychoterapeutický výcvik jsem si vybrala vědomě a to v integrativní psychoterapii se zaměřením na psychosomatiku. Řečeno lidsky a srozumitelně se jedná o práci s více přístupy, které nejlépe odpovídají individuálním potřebám každého z Vás. Společně hledáme cestu, která respektuje Váš příběh, vztahy, životní zkušenosti a možnosti.</p>
+        <p>Svou činnost vykonávám v souladu s etickým kodexem ČAP a pod odbornou supervizí.</p>
       </div>
     </div>
   </div>
@@ -916,7 +1026,7 @@
           <div class="process-num">02</div>
           <h3>Společná cesta</h3>
         </div>
-        <p>Pravidelná setkání tempem a délkou spolupráce, které vyhovují Vám.</p>
+        <p>Půjdeme vedle sebe tak dlouho, jak bude potřeba.</p>
       </div>
       <div class="process-step">
         <div class="process-step-head">
@@ -969,10 +1079,6 @@
       <details class="faq-item">
         <summary>Jak dlouho terapie trvá?</summary>
         <p>Záleží na tématu i na tempu, které Vám vyhovuje. Někdy stačí několik setkání, jindy je vhodná spolupráce na několik měsíců. Průběžně si říkáme, kde jsme a kam dál.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Co když nevím, jestli terapii potřebuji?</summary>
-        <p>To vůbec nevadí. Stačí přijít na úvodní konzultaci — společně si ujasníme, s čím přicházíte a jestli Vám terapie v tuto chvíli může pomoct.</p>
       </details>
     </div>
   </div>
@@ -1047,7 +1153,7 @@
       <!-- QR kód je záměrně mimo .info-row (mimo flex řádek s ikonou), aby ho
            šířka úzkého vnitřního sloupce nijak neomezovala – dřív kvůli tomu
            obrázek nešel reálně rozšířit přes cca 190px bez ohledu na CSS. -->
-      <img class="qr-image" src="images/QR.jpeg" alt="QR kód pro platbu na účet 2003570606/2010" width="230" height="230">
+      <img class="qr-image" src="images/QR.jpeg" alt="QR kód pro platbu na účet 2003570606/2010" width="230" height="230" loading="lazy">
     </div>
   </div>
 </section>
