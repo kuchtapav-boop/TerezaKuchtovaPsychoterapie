@@ -234,6 +234,28 @@
     .menu-toggle-input:checked ~ .menu-toggle-label .icon-close{ display:block; }
   }
 
+  /* Na užších mobilních šířkách se logo (jméno) a tlačítko "Objednat se"
+     spolu s hamburger ikonou dřív nevešly do jednoho řádku hlavičky –
+     tlačítko se nesmí zmenšovat (flex-shrink:0), takže veškerý přebytek
+     šířky "spolykalo" logo, a hamburger byl vytlačen mimo obrazovku.
+     Zde proto na mobilu zmenšíme logo, mezery i tlačítko, aby se vše
+     vešlo vedle sebe na jeden řádek a hamburger byl vždy vidět. */
+  @media (max-width:600px){
+    .nav-wrap{ padding:14px 16px; }
+    .logo{
+      font-size:clamp(.82rem, 4.2vw, 1.05rem);
+      white-space:nowrap; /* jméno se na mobilu nezalamuje na dva řádky */
+    }
+    .logo span{ font-size:.6rem; letter-spacing:.1em; }
+    .nav-right{ gap:10px; }
+    .nav-cta{
+      padding:8px 14px;
+      font-size:.8rem;
+      white-space:nowrap;
+    }
+    .menu-toggle-label .icon{ width:22px; height:22px; }
+  }
+
   /* ===========================================================
      HERO
      =========================================================== */
@@ -332,6 +354,14 @@
     .hero .container{ grid-template-columns:1fr; }
     .hero-photo{ order:-1; }
     .hero-photo-frame{ max-width:280px; }
+  }
+
+  /* Na mobilních telefonech byl nadpis "Mgr. Tereza Kuchtová" i přes clamp()
+     stále příliš velký a zalamoval se na dva řádky. Velikost písma proto
+     na úzkých šířkách škálujeme přímo podle šířky obrazovky (vw), aby jméno
+     vždy zůstalo na jednom řádku bez ohledu na konkrétní velikost telefonu. */
+  @media (max-width:480px){
+    .hero h1{ font-size:clamp(1.4rem, 6.8vw, 2.3rem); }
   }
 
   /* ===========================================================
